@@ -15,9 +15,9 @@ public class GhastModConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String FILE_NAME = "ghast_sight.json";
     private static final Logger LOGGER = LoggerFactory.getLogger("GhastSight");
-    private static final File configFile = new File(FabricLoader.getInstance().getConfigDir().toFile(), FILE_NAME);
+    public static final File configFile = new File(FabricLoader.getInstance().getConfigDir().toFile(), FILE_NAME);
     public HeightEnum HeightDifference = HeightEnum.Medium;
-    private transient long lastModified = 0L;
+    public transient long lastModified = 0L;
 
     public static GhastModConfig load() {
         GhastModConfig config = new GhastModConfig();

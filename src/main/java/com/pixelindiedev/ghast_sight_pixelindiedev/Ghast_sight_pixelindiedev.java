@@ -55,5 +55,6 @@ public class Ghast_sight_pixelindiedev implements ModInitializer {
     public void onInitialize() {
         ServerTickEvents.START_SERVER_TICK.register(Ghast_sight_pixelindiedev::onServerTick);
         CONFIG = GhastModConfig.load();
+        if (CONFIG.lastModified == 0L) CONFIG.lastModified = GhastModConfig.configFile.lastModified();
     }
 }
