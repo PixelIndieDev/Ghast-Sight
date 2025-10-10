@@ -1,4 +1,6 @@
 # Ghast Sight
+<img src="https://github.com/PixelIndieDev/Ghast-Sight/blob/main/documentation/icons/GhastSight-icon.png?raw=true" width="400" height="400">
+
 **Tired of ghasts ignoring you?**
 
 This mod fixes that by giving ghasts an actually reasonable vertical line of sight. No more ghasts that ignore you because you’re 5 blocks above them.
