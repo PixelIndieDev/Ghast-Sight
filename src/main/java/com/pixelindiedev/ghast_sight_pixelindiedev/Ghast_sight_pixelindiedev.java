@@ -1,18 +1,19 @@
 package com.pixelindiedev.ghast_sight_pixelindiedev;
 
 import com.pixelindiedev.ghast_sight_pixelindiedev.config.GhastModConfig;
+import com.pixelindiedev.ghast_sight_pixelindiedev.mixin.MobEntityAccessor;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.ai.goal.GoalSelector;
-import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Ghast;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.WeakHashMap;
 
 public class Ghast_sight_pixelindiedev implements ModInitializer {
-    private static final WeakHashMap<GhastEntity, Float> loadedGhasts = new WeakHashMap<>();
+    private static final WeakHashMap<Ghast, Float> loadedGhasts = new WeakHashMap<>();
     public static GhastModConfig CONFIG;
 
     public static float getSightValue() {
@@ -30,17 +31,17 @@ public class Ghast_sight_pixelindiedev implements ModInitializer {
 
         loadedGhasts.forEach((ghast, rememberedHeightDifference) -> {
             if (rememberedHeightDifference != newSight) {
-                GoalSelector selector = ((com.pixelindiedev.ghast_sight_pixelindiedev.mixin.MobEntityAccessor) ghast).getTargetSelector();
+                GoalSelector selector = ((MobEntityAccessor) ghast).getTargetSelector();
 
-                selector.getGoals().removeIf(g -> g.getGoal() instanceof ActiveTargetGoal);
-                selector.add(1, new ActiveTargetGoal<>(ghast, PlayerEntity.class, 10, true, false, (entity, world) -> Math.abs(entity.getY() - ghast.getY()) <= newSight));
+                selector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof NearestAttackableTargetGoal);
+                selector.addGoal(1, new NearestAttackableTargetGoal<>(ghast, Player.class, 10, true, false, (entity, world) -> Math.abs(entity.getY() - ghast.getY()) <= newSight));
 
                 AddGhast(ghast, newSight);
             }
         });
     }
 
-    public static void AddGhast(GhastEntity ghast, float sightRange) {
+    public static void AddGhast(Ghast ghast, float sightRange) {
         loadedGhasts.put(ghast, sightRange);
     }
 
