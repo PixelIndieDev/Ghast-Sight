@@ -3,8 +3,8 @@ package com.pixelindiedev.ghast_sight_pixelindiedev.config.integration;
 import com.pixelindiedev.ghast_sight_pixelindiedev.config.GhastModConfig;
 import com.pixelindiedev.ghast_sight_pixelindiedev.config.HeightEnum;
 import com.terraformersmc.modmenu.gui.widget.ModMenuButtonWidget;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 public class GhastConfigScreen extends Screen {

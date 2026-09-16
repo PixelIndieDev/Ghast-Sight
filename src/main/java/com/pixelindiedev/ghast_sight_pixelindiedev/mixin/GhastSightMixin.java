@@ -15,14 +15,11 @@ public abstract class GhastSightMixin {
     @Inject(method = "registerGoals", at = @At("TAIL"))
     private void modifyTargetingRange(CallbackInfo ci) {
         Ghast self = (Ghast) (Object) this;
-
         GoalSelector selector = ((MobEntityAccessor) self).getTargetSelector();
-
         selector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof NearestAttackableTargetGoal);
 
         float newSight = Ghast_sight_pixelindiedev.getSightValue();
         selector.addGoal(1, new NearestAttackableTargetGoal<>(self, Player.class, 10, true, false, (entity, world) -> Math.abs(entity.getY() - self.getY()) <= newSight));
-
         Ghast_sight_pixelindiedev.AddGhast(self, newSight);
     }
 }
